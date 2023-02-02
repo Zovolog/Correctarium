@@ -1,0 +1,21 @@
+
+.placeholder {
+  border: solid 1px #eeeeee;
+  outline: none;
+  border-radius: 20px;
+  font-size: 18px;
+  font-family: Native;
+  font-weight: 600;
+  margin-top: 20px;
+}
+  .placeholder:focus{
+    border: solid 1px #0068e4;
+}
+
+.message {
+  width: 800px;
+  padding-top: 30px;
+  padding-left: 40px;
+  height: 250px;
+  resize:none;
+}

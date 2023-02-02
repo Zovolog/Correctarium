@@ -1,0 +1,45 @@
+
+.form-item {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+
+.form-input {
+  border: solid 1px #eeeeee;
+  outline: none;
+  width: 400px;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: Native;
+  font-weight: 400;
+  padding: 20px;
+}
+
+.form-input:focus{
+  border: solid 1px #0068e4;
+}
+
+.form-label {
+  position: absolute;
+  pointer-events: none;
+  left: 20px;
+  top: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 40px;
+  color: #687a86;
+  font-weight: bold;
+}
+
+.activeInput~.form-label,
+.activeInput:not(:focus):invalid~.form-label {
+  top: -20px;
+  font-size: 12px;
+  color: #0068e4;
+  background-color: white;
+}
+.none{
+  display: none;
+}

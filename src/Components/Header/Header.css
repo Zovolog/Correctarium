@@ -1,0 +1,37 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.logo{
+  font-size: 36px;
+  font-family: Native;
+}
+.close {
+  cursor: pointer; 
+  position: absolute; 
+  height: 41px;
+  width: 41px;
+  background: none;
+  outline: none;
+  border: none;
+  left: 85%;
+  top: 8%;
+}
+.close:hover{
+  background-color: #eeeeee;
+}
+.close:before, .close:after {
+  content: ""; 
+  position: absolute; 
+  width: 40px; 
+  height: 5px; 
+  left: 1px;
+  background: black;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}

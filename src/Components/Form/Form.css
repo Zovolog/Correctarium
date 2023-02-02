@@ -1,0 +1,47 @@
+.form{
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.price{
+  text-align: right;
+  font-size: 60px;
+  font-weight: 100;
+  color: #0068e4;
+  margin: 0;
+  margin-bottom: 30px;
+}
+.column-div{
+  display: flex;
+  flex-direction: column;
+}
+.row-div{
+  display: flex;
+  margin-top: 30px;
+}
+
+.orderButton{
+  background-color: #252e47;
+  color: white;
+  border-radius: 10px;
+  width: 300px;
+  height: 80px;
+  font-size: 20px;
+  margin-top: 50px;
+  font-weight: 900;
+  font-family: Native;
+  box-shadow: 0px 0px 15px -2px rgba(66, 68, 90, 1);
+  cursor: pointer;
+}
+
+.div-column{
+  display: flex;
+  flex-direction: column;
+}
+.validation-message{
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: red;
+}

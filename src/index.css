@@ -1,0 +1,12 @@
+@font-face {
+  font-family: Native;
+  src: url('./fonts/Horizon\ Type\ -\ AcherusFeral-Light.otf');
+}
+
+body{
+  font-family: Native;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
