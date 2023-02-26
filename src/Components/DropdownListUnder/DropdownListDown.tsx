@@ -1,20 +1,18 @@
 import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
 
-import "./DropdownList.css";
+import "./DropdownListDown.css";
 import img from "./arrow_down.svg";
 
 interface IProps {
   options: string[];
   name: string;
-  margin: string;
   onItemSelect: (value: string) => void;
 }
 
-const DropdownList: FC<IProps> = ({
+const DropdownListDown: FC<IProps> = ({
   options,
   name,
   onItemSelect,
-  margin,
 }: IProps) => {
   const onOptionCLick = useCallback(
     (item: string) => {
@@ -37,10 +35,17 @@ const DropdownList: FC<IProps> = ({
     return "select__header";
   }
 
-  const openingSelect = (el: React.FormEvent<HTMLDivElement>) => {
-    el.currentTarget.parentElement?.classList.toggle("is-active");
-
-    icon.current?.classList.add("active_icon");
+  const openingSelect = (
+    el: React.FormEvent<HTMLDivElement>,
+    options: string[]
+  ) => {
+    if (options.length === 0) {
+      selectHeader.current?.classList.add("select-not-clikable");
+    } else {
+      el.currentTarget.parentElement?.classList.toggle("is-active");
+      icon.current?.classList.add("active_icon");
+      selectHeader.current?.classList.remove("select-not-clikable");
+    }
   };
 
   const settingValue = (el: React.FormEvent<HTMLDivElement>) => {
@@ -68,6 +73,7 @@ const DropdownList: FC<IProps> = ({
   }, [options]);
 
   const unFocus = (el: React.FormEvent<HTMLDivElement>) => {
+    selectHeader.current?.classList.remove("select-not-clikable");
     if (value != "") {
       selectCurrent.current?.classList.add("non-active");
       selectCurrent.current?.classList.remove("select__current");
@@ -82,14 +88,16 @@ const DropdownList: FC<IProps> = ({
       <div
         className="select"
         ref={list}
-        style={{ marginLeft: margin }}
+        style={{ marginLeft: "30px" }}
         onBlur={unFocus}
         tabIndex={0}
       >
         <div
-          className="select__header"
           ref={selectHeader}
-          onClick={openingSelect}
+          onClick={(e) => {
+            openingSelect(e, options);
+          }}
+          className="select__header"
         >
           <span className="select__current" ref={selectCurrent}>
             {name}
@@ -106,4 +114,4 @@ const DropdownList: FC<IProps> = ({
     </div>
   );
 };
-export default memo(DropdownList);
+export default memo(DropdownListDown);

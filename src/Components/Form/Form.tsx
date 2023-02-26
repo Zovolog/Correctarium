@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { BigInput } from "../BigInput/BinInput";
 import DropdownList from "../DropdownList/DropdownList";
+import DropdownListDown from "../DropdownListUnder/DropdownListDown";
 import Input from "../Input/Input";
 import "./Form.css";
 const Form: React.FC = (props) => {
@@ -12,13 +12,6 @@ const Form: React.FC = (props) => {
   const [price, showPrice] = useState(0);
   const [value, getValue] = useState("");
   const [deadline, showDeadline] = useState("");
-
-  const [validationEmail, showValidationEmail] = useState("");
-  const [validationComment, showValidationComment] = useState("");
-  const [validationService, showValidationService] = useState("");
-  const [validationText, showValidationText] = useState("");
-  const [validationName, showValidationName] = useState("");
-  const [validationValue, showValidationValue] = useState("");
 
   function countingDeadline(
     date: any,
@@ -106,10 +99,11 @@ const Form: React.FC = (props) => {
   const coutingPriceAndDeadline = (text: string, value: string) => {
     let symbols = text.replace(/\s/g, "").split("").length;
 
-    let price = 0;
-
+    let price: number = 0;
+    console.log();
     if (value === "Українська" || value === "Російська") {
       price = symbols * 0.05;
+
       price > 50 ? showPrice(price) : showPrice(50);
       let hours = Math.ceil(symbols / 1333);
       if (hours === 1) {
@@ -129,35 +123,15 @@ const Form: React.FC = (props) => {
     }
   };
 
-  const validation = (e: any) => {
-    text === "" ? showValidationText("Введіть текст") : showValidationText("");
-    email === ""
-      ? showValidationEmail("Введіть пошту")
-      : showValidationEmail("");
-    name === "" ? showValidationName("Введіть імя") : showValidationName("");
-    service === ""
-      ? showValidationService("Виберіть послугу")
-      : showValidationService("");
-    comment === ""
-      ? showValidationComment("Виберіть мову")
-      : showValidationComment("");
-    value === ""
-      ? showValidationValue("Виберіть мову")
-      : showValidationValue("");
-  };
-
   function isField(e: any) {
     let count = 0;
     text !== "" ? count++ : (count = 0);
-    email !== "" ? count++ : (count = 0);
     service !== "" ? count++ : (count = 0);
-    comment !== "" ? count++ : (count = 0);
     value !== "" ? count++ : (count = 0);
-    if (count === 5) {
+    if (count === 3) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   return (
@@ -170,11 +144,18 @@ const Form: React.FC = (props) => {
             onItemSelect={getService}
             margin="0px"
           />
-          <p className="validation-message">{validationService}</p>
         </div>
         <div>
-          <BigInput name={"Введіть текст"} onGettingValue={getText} />
-          <p className="validation-message">{validationText}</p>
+          <textarea
+            placeholder="Введіть текст"
+            className="placeholder  message"
+            onChange={(e) => {
+              getText(e.target.value);
+              if (isField(e)) {
+                coutingPriceAndDeadline(text, value);
+              }
+            }}
+          ></textarea>
         </div>
         <div className="row-div">
           <div className="block-column">
@@ -183,7 +164,6 @@ const Form: React.FC = (props) => {
               margin={"0px"}
               onGettingValue={getEmail}
             />
-            <p className="validation-message">{validationEmail}</p>
           </div>
           <div className="block-column">
             <Input
@@ -191,7 +171,6 @@ const Form: React.FC = (props) => {
               margin={"30px"}
               onGettingValue={getName}
             />
-            <p className="validation-message">{validationName}</p>
           </div>
         </div>
         <div className="row-div">
@@ -201,31 +180,26 @@ const Form: React.FC = (props) => {
               margin={"0px"}
               onGettingValue={getComment}
             />
-            <p className="validation-message">{validationComment}</p>
           </div>
           <div className="block-column">
-            <DropdownList
+            <DropdownListDown
               name={changingName(service)}
               options={changingOptions(service)}
               onItemSelect={getValue}
-              margin="30px"
             />
-            <p className="validation-message">{validationValue}</p>
           </div>
         </div>
       </div>
       <div className="column-div">
-        <h1 className="price">{price} грн</h1>
+        <h1 className="price">
+          {parseFloat(price.toFixed(2))} <span className="currency">грн</span>
+        </h1>
         <h1 className="deadline">{deadline}</h1>
         <div>
           <button
             className="orderButton"
             onClick={(e) => {
               e.preventDefault();
-              validation(e);
-              if (isField(e)) {
-                coutingPriceAndDeadline(text, value);
-              }
             }}
           >
             Зробити замовлення

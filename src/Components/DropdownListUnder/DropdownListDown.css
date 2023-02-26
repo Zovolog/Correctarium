@@ -41,7 +41,6 @@
 }
 .select-not-clikable {
   border: none;
-  cursor: auto;
 }
 .select__current {
   font-size: 18px;
