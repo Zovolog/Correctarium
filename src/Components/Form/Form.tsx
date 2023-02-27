@@ -31,11 +31,11 @@ const Form: React.FC = (props) => {
       const h = date.getHours();
       if (h < WORKING_HOURS_DAY_START) {
         date.setHours(WORKING_HOURS_DAY_START);
-        date.setMinutes(0);
+        date.setMinutes(date.getMinutes() + MINS_GAP);
       } else if (WORKING_HOURS_DAY_END <= h) {
         date.setDate(date.getDate() + 1);
         date.setHours(WORKING_HOURS_DAY_START);
-        date.setMinutes(0);
+        date.setMinutes(date.getMinutes() + MINS_GAP);
       }
     }
 
@@ -55,14 +55,10 @@ const Form: React.FC = (props) => {
 
     normalizeHours(date);
     normalizeDays(date);
-
     for (let index = 0; index < hoursShift; index++) {
       date.setHours(date.getHours() + 1);
+      normalizeHours(date);
     }
-    date.setMinutes(date.getMinutes() + MINS_GAP);
-    normalizeHours(date);
-    normalizeDays(date);
-
     for (let index = 0; index < daysShift; index++) {
       date.setDate(date.getDate() + 1);
       normalizeDays(date);
@@ -103,13 +99,12 @@ const Form: React.FC = (props) => {
     console.log();
     if (value === "Українська" || value === "Російська") {
       price = symbols * 0.05;
-
       price > 50 ? showPrice(price) : showPrice(50);
       let hours = Math.ceil(symbols / 1333);
       if (hours === 1) {
         showDeadline(countingDeadline(new Date(), hours, 30));
       } else {
-        showDeadline(countingDeadline(new Date(), hours, 0));
+        showDeadline(countingDeadline(new Date(), hours, 30));
       }
     } else {
       price = symbols * 0.12;
@@ -118,7 +113,7 @@ const Form: React.FC = (props) => {
       if (hours === 1) {
         showDeadline(countingDeadline(new Date(), hours, 30));
       } else {
-        showDeadline(countingDeadline(new Date(), hours, 60));
+        showDeadline(countingDeadline(new Date(), hours, 30));
       }
     }
   };

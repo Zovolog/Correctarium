@@ -7,8 +7,8 @@
   display: block;
   width: 440px;
 }
-.select.is-active .select__header {
-  border: 1px solid #0068e4;
+.blue-border {
+  border: 1px solid #0068e4 !important;
 }
 .active {
   position: absolute;
