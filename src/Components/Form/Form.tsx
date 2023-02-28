@@ -105,7 +105,7 @@ const Form: React.FC = (props) => {
       showDeadline(countingDeadline(new Date(), hours, 30));
     } else {
       price = symbols * 0.12;
-      price > 50 ? showPrice(price) : showPrice(120);
+      price > 120 ? showPrice(price) : showPrice(120);
       let hours = Math.ceil(symbols / 333);
       showDeadline(countingDeadline(new Date(), hours, 30));
     }
