@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DropdownList from "../DropdownList/DropdownList";
 import DropdownListDown from "../DropdownListUnder/DropdownListDown";
 import Input from "../Input/Input";
@@ -8,11 +8,15 @@ const Form: React.FC = (props) => {
   const [name, getName] = useState("");
   const [comment, getComment] = useState("");
   const [service, getService] = useState("");
-  const [text, getText] = useState("");
+  const [symbols, getSymbols] = useState(0);
   const [price, showPrice] = useState(0);
   const [value, getValue] = useState("");
   const [deadline, showDeadline] = useState("");
-
+  useEffect(() => {
+    if (value && symbols) {
+      coutingPriceAndDeadline(symbols, value);
+    }
+  }, [value]);
   function countingDeadline(
     date: any,
     hoursShiftInitial: number,
@@ -92,42 +96,20 @@ const Form: React.FC = (props) => {
     }
   };
 
-  const coutingPriceAndDeadline = (text: string, value: string) => {
-    let symbols = text.replace(/\s/g, "").split("").length;
-
+  const coutingPriceAndDeadline = (symbols: number, value: string) => {
     let price: number = 0;
-    console.log();
     if (value === "Українська" || value === "Російська") {
       price = symbols * 0.05;
       price > 50 ? showPrice(price) : showPrice(50);
       let hours = Math.ceil(symbols / 1333);
-      if (hours === 1) {
-        showDeadline(countingDeadline(new Date(), hours, 30));
-      } else {
-        showDeadline(countingDeadline(new Date(), hours, 30));
-      }
+      showDeadline(countingDeadline(new Date(), hours, 30));
     } else {
       price = symbols * 0.12;
       price > 50 ? showPrice(price) : showPrice(120);
       let hours = Math.ceil(symbols / 333);
-      if (hours === 1) {
-        showDeadline(countingDeadline(new Date(), hours, 30));
-      } else {
-        showDeadline(countingDeadline(new Date(), hours, 30));
-      }
+      showDeadline(countingDeadline(new Date(), hours, 30));
     }
   };
-
-  function isField(e: any) {
-    let count = 0;
-    text !== "" ? count++ : (count = 0);
-    service !== "" ? count++ : (count = 0);
-    value !== "" ? count++ : (count = 0);
-    if (count === 3) {
-      return true;
-    }
-    return false;
-  }
 
   return (
     <form className="form">
@@ -145,9 +127,15 @@ const Form: React.FC = (props) => {
             placeholder="Введіть текст"
             className="placeholder  message"
             onChange={(e) => {
-              getText(e.target.value);
-              if (isField(e)) {
-                coutingPriceAndDeadline(text, value);
+              let symbols = e.target.value.replace(/\s/g, "").split("").length;
+              getSymbols(symbols);
+              if (value) {
+                if (symbols) {
+                  coutingPriceAndDeadline(symbols, value);
+                } else {
+                  showPrice(0);
+                  showDeadline("");
+                }
               }
             }}
           ></textarea>
